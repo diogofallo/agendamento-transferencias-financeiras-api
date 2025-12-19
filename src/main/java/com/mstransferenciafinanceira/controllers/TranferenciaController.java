@@ -33,9 +33,9 @@ public class TranferenciaController {
     }
 
     @GetMapping(value = "/listaTransferencias")
-    public ResponseEntity<DPage<TransferenciaDTO>>getListTransfers(HttpServletRequest request,
-                                                                          @RequestParam(defaultValue = "0", required = false) int page,
-                                                                          @RequestParam(defaultValue = "20", required = false) int size) {
+    public ResponseEntity<DPage<TransferenciaDTO>> getListTransfers(HttpServletRequest request,
+                                                                   @RequestParam(defaultValue = "0", required = false) int page,
+                                                                   @RequestParam(defaultValue = "20", required = false) int size) {
         Page<TransferenciaDTO> response;
         response = transferenciaService.returnAllTransfers(request, 0, 20);
 

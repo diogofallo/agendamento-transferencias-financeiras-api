@@ -49,7 +49,7 @@ public class TransferenciaService {
         vo.setDataAgendamento(dataAgendamento);
         vo.setDataTransferencia(dataTransferencia);
 
-        Transferencia salvo = transferenciaRepository.save(vo);
+        transferenciaRepository.save(vo);
         return modelMapper.map(vo, TransferenciaDTO.class);
     }
 

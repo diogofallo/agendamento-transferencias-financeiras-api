@@ -15,18 +15,10 @@ public class ModelMapperConfig {
 
     @Bean
     public ModelMapper getModelMapper() {
-
-        Converter<String, LocalDate> toStringDate = new AbstractConverter<String, LocalDate>() {
-            @Override
-            protected LocalDate convert(String source) {
-                DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate localDate = LocalDate.parse(source, format);
-                return localDate;
-            }
-        };
-
         return new ModelMapper();
     }
+
+
 
 
 }

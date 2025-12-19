@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 
 @Mapper(componentModel = "spring")
 public interface ReceivableMapper {
-
     default DPage<TransferenciaDTO> toDPageResponse(Page<TransferenciaDTO> servico){
         return PageMapper.toDPage(servico);
     }
