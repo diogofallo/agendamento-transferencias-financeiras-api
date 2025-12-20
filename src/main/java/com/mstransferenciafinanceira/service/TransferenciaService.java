@@ -4,6 +4,7 @@ import com.mstransferenciafinanceira.dto.TransferenciaDTO;
 import com.mstransferenciafinanceira.entity.TaxaTranferencia;
 import com.mstransferenciafinanceira.entity.Transferencia;
 import com.mstransferenciafinanceira.exception.ResourceNotFoundException;
+import com.mstransferenciafinanceira.mapper.TransferenciaMapper;
 import com.mstransferenciafinanceira.repository.TaxaTransferenciaRepository;
 import com.mstransferenciafinanceira.repository.TransferenciaRepository;
 import com.mstransferenciafinanceira.util.Utils;
@@ -34,10 +35,10 @@ public class TransferenciaService {
     TaxaTransferenciaRepository taxaTransferenciaRepository;
 
     @Autowired
-    ModelMapper modelMapper;
+    private TransferenciaMapper transferenciaMapper;
 
     public TransferenciaDTO newAgtoendamen(TransferenciaDTO dto) throws ParseException {
-        Transferencia vo = modelMapper.map(dto, Transferencia.class);
+        Transferencia vo = transferenciaMapper.toEntity(dto);
 
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataAgendamento = LocalDate.now();
@@ -50,17 +51,16 @@ public class TransferenciaService {
         vo.setDataTransferencia(dataTransferencia);
 
         transferenciaRepository.save(vo);
-        return modelMapper.map(vo, TransferenciaDTO.class);
+        return transferenciaMapper.toDTO(vo);
     }
 
     public Page<TransferenciaDTO> returnAllTransfers(HttpServletRequest request, int page, int size) {
 
         Pageable pageRequest = PageRequest.of(page, size);;
         Page<Transferencia> result = transferenciaRepository.findAll(pageRequest);
-        List<TransferenciaDTO> response = result
-                .getContent()
+        List<TransferenciaDTO> response = result.getContent()
                 .stream()
-                .map(p -> modelMapper.map(p , TransferenciaDTO.class))
+                .map(transferenciaMapper::toDTO)
                 .collect(Collectors.toList());
 
         return new PageImpl<>(response, result.getPageable(), result.getTotalElements());
